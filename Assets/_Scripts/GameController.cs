@@ -17,8 +17,23 @@ public class GameController : MonoBehaviour
     [SerializeField] TMP_InputField menu_02_input_substring;
     [SerializeField] TMP_InputField menu_02_input_new_substring;
     [SerializeField] TMP_Text menu_02_resultText;
+
+    [Header("Menu03")]
+    [SerializeField] TMP_InputField menu_03_input;
+    [SerializeField] TMP_Text menu_03_resultText;
+
+    [Header("Menu04")]
+    [SerializeField] TMP_InputField menu_04_input_n;
+    [SerializeField] TMP_InputField menu_04_input_m;
+    [SerializeField] TMP_Text menu_04_resultText;
     private void Start() {
         helper = GetComponent<CrazyMathHelper>();
+    }
+
+    private void Update() {
+        if (Input.GetKey("escape")) {
+            Application.Quit();
+        }
     }
 
     public void Menu_01_ClearField() {
@@ -54,5 +69,47 @@ public class GameController : MonoBehaviour
         }
         string result = menu_02_input.text.Replace(menu_02_input_substring.text, menu_02_input_new_substring.text);
         menu_02_resultText.text = result;
+    }
+
+    public void Menu_03_ClearField() {
+        menu_03_input.text = string.Empty;
+        menu_03_resultText.text = string.Empty;
+    }
+
+    public void Menu_03_Enter() {
+        if (string.IsNullOrWhiteSpace(menu_03_input.text)) {
+            menu_03_resultText.text = "Incorrect input";
+            return;
+        }
+        if (int.TryParse(menu_03_input.text, out int n)) {
+            List<int> array = helper.GetRandomSortedArray(n);
+            menu_03_resultText.text = $"result: {string.Join(", ", array)}";
+            if (array.Count > 400) {
+                menu_03_resultText.fontSize = 8;
+            } else if (array.Count > 30) {
+                menu_03_resultText.fontSize = 24;
+            } else {
+                menu_03_resultText.fontSize = 72;
+            }
+        }
+    }
+
+    public void Menu_04_ClearField() {
+        menu_04_input_n.text = string.Empty;
+        menu_04_input_m.text = string.Empty;
+        menu_04_resultText.text = string.Empty;
+    }
+
+    public void Menu_04_Enter() {
+        if (string.IsNullOrWhiteSpace(menu_04_input_n.text) || string.IsNullOrWhiteSpace(menu_04_input_m.text)) {
+            menu_04_resultText.text = "Incorrect input";
+            return;
+        }
+        if (int.TryParse(menu_04_input_n.text, out int n)) {
+            if (int.TryParse(menu_04_input_m.text, out int m)) {
+                List<int> array = helper.GetRandomSorted2dArray(n, m);
+                
+            }
+        }
     }
 }
