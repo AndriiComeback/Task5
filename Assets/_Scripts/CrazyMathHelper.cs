@@ -32,13 +32,31 @@ public class CrazyMathHelper : MonoBehaviour
         int[] result = QuickSort(array, 0, array.Length);
         return result.ToList();
     }
-    public List<int> GetRandomSorted2dArray(int lenght) {
-        int[] array = new int[lenght];
-        for (int i = 0; i < lenght; i++) {
-            array[i] = Random.Range(-500, 501);
+    public (int[,], int[,]) GetRandomSorted2dArray(int n, int m) {
+        int[,] array = new int[n, m];
+        var sums = new Dictionary<int, int>();
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                array[i,j] = Random.Range(-500, 501);
+            }
         }
-        int[] result = QuickSort(array, 0, array.Length);
-        return result.ToList();
+        for (int j = 0; j < m; j++) {
+            int sum = 0;
+            for (int i = 0; i < n; i++) {
+                sum += array[i, j];
+            }
+            sums.Add(j, sum);
+        }
+        sums = sums.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+        int[,] resultArray = new int[n, m];
+        int k = 0;
+        foreach (var item in sums) {
+            for (int i = 0; i < n; i++) {
+                resultArray[i, k] = array[i, item.Key];
+            }
+            k++;
+        }
+        return (array, resultArray);
     }
 
     #endregion

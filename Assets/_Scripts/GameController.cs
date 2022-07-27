@@ -107,9 +107,29 @@ public class GameController : MonoBehaviour
         }
         if (int.TryParse(menu_04_input_n.text, out int n)) {
             if (int.TryParse(menu_04_input_m.text, out int m)) {
-                List<int> array = helper.GetRandomSorted2dArray(n, m);
-                
+                (int[,] startArray, int[,] resultArray) = helper.GetRandomSorted2dArray(n, m);
+                menu_04_resultText.text = "Start array:\n";
+                Show2dArray(startArray);
+                menu_04_resultText.text += "\nSorted array:\n";
+                Show2dArray(resultArray);
             }
+        }
+    }
+
+    void Show2dArray(int[,] array) {
+        for (int i = 0; i < array.GetLength(0); i++) {
+            for (int j = 0; j < array.GetLength(1); j++) {
+                if (array[i, j] <= -100) {
+                    menu_04_resultText.text += $"{array[i, j]} ";
+                } else if (array[i, j] <= -10 || array[i, j] >= 100) {
+                    menu_04_resultText.text += $" {array[i, j]} ";
+                } else if (array[i, j] <= -1 || array[i, j] >= 10) {
+                    menu_04_resultText.text += $"  {array[i, j]} ";
+                } else if (array[i, j] < 10) {
+                    menu_04_resultText.text += $"   {array[i, j]} ";
+                }
+            }
+            menu_04_resultText.text += '\n';
         }
     }
 }
