@@ -45,7 +45,7 @@ public class GameController : MonoBehaviour
             menu_01_resultText.text = "Incorrect input";
             return;
         }
-        bool isPalindrome = helper.GetIsPalindrome(menu_01_input.text);
+        bool isPalindrome = helper.GetIsPalindrome(menu_01_input.text.Replace(" ", "").ToLower());
         if (isPalindrome) {
             menu_01_resultText.text = "It is palindrome.";
         } else {
@@ -67,7 +67,7 @@ public class GameController : MonoBehaviour
             menu_02_resultText.text = "Incorrect input";
             return;
         }
-        string result = menu_02_input.text.Replace(menu_02_input_substring.text, menu_02_input_new_substring.text);
+        string result = menu_02_input.text.ToLower().Replace(menu_02_input_substring.text.ToLower(), menu_02_input_new_substring.text.ToLower());
         menu_02_resultText.text = result;
     }
 
